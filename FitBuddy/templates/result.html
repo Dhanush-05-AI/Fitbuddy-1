@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitBuddy | Your Plan</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <main class="container wide">
+        <header class="topbar">
+            <div>
+                <span class="eyebrow">FITBUDDY AI</span>
+                <h1>Your Personalized Plan</h1>
+            </div>
+            <a class="secondary-btn" href="/">New Plan</a>
+        </header>
+
+        {% if message %}
+        <div class="success">{{ message }}</div>
+        {% endif %}
+
+        <section class="profile-grid">
+            <div class="mini-card"><span>Name</span><strong>{{ username }}</strong></div>
+            <div class="mini-card"><span>User ID</span><strong>{{ user_id }}</strong></div>
+            <div class="mini-card"><span>Age</span><strong>{{ age }}</strong></div>
+            <div class="mini-card"><span>Weight</span><strong>{{ weight }} kg</strong></div>
+            <div class="mini-card"><span>Goal</span><strong>{{ goal }}</strong></div>
+            <div class="mini-card"><span>Intensity</span><strong>{{ intensity }}</strong></div>
+        </section>
+
+        <section class="card">
+            <h2>🏋️ 7-Day Workout Plan</h2>
+            <pre class="plan">{{ workout_plan }}</pre>
+        </section>
+
+        <section class="card tip-card">
+            <h2>🥗 Nutrition / Recovery Tip</h2>
+            <p>{{ nutrition_tip or "A tip is not available for this plan right now. Generate the plan again to get one." }}</p>
+        </section>
+
+        <section class="card">
+            <h2>🔄 Update Plan with Feedback</h2>
+            <p class="muted">
+                Tell FitBuddy what you want changed, such as more cardio, more recovery,
+                or a different exercise focus.
+            </p>
+
+            <form action="/submit-feedback" method="post" data-loading="Updating your plan…">
+                <input type="hidden" name="user_id" value="{{ user_id }}">
+                <textarea name="feedback" rows="5" maxlength="2000"
+                          placeholder="Example: Include more cardio and add an extra recovery day."
+                          required></textarea>
+                <button class="primary-btn" type="submit">Update My Plan</button>
+            </form>
+        </section>
+
+        <p class="notice">
+            FitBuddy provides general fitness information. If you have pain, an injury,
+            illness, or another health concern, seek advice from a qualified professional.
+        </p>
+    </main>
+    <script src="/static/app.js"></script>
+</body>
+</html>

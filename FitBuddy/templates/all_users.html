@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitBuddy | Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <main class="container wide">
+        <header class="topbar">
+            <div>
+                <span class="eyebrow">FITBUDDY AI</span>
+                <h1>Admin Dashboard</h1>
+                <p class="muted">Registered users and their original/updated plans.</p>
+            </div>
+            <a class="secondary-btn" href="/">Home</a>
+        </header>
+
+        {% if users %}
+            {% for user in users %}
+            <section class="card admin-card">
+                <div class="admin-heading">
+                    <div>
+                        <h2>{{ user.username }}</h2>
+                        <p>
+                            ID: {{ user.user_id }} · Age: {{ user.age }} ·
+                            Weight: {{ user.weight }} kg · Goal: {{ user.goal }} ·
+                            Intensity: {{ user.intensity }}
+                        </p>
+                    </div>
+                    <form action="/delete-user/{{ user.user_id }}" method="post"
+                          onsubmit="return confirm('Delete this user?');">
+                        <button class="danger-btn" type="submit">Delete</button>
+                    </form>
+                </div>
+
+                <div class="plan-columns">
+                    <div>
+                        <h3>Original Plan</h3>
+                        <pre class="plan small">{{ user.original_plan or "No plan available." }}</pre>
+                    </div>
+                    <div>
+                        <h3>Updated Plan</h3>
+                        <pre class="plan small">{{ user.updated_plan or "No feedback update yet." }}</pre>
+                    </div>
+                </div>
+            </section>
+            {% endfor %}
+        {% else %}
+            <section class="card">
+                <h2>No users yet</h2>
+                <p class="muted">Generate a plan from the home page to create the first user record.</p>
+            </section>
+        {% endif %}
+    </main>
+</body>
+</html>
